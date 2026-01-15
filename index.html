@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECG 3D - Rối Loạn Dẫn Truyền</title>
+    <meta name="description" content="App học ECG 3D tương tác cho BS CK1 Nội khoa">
+    <meta name="theme-color" content="#1a1a2e">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- LOADING SCREEN -->
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="heart-pulse"></div>
+            <p>Đang tải hệ thống ECG 3D...</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="app" class="hidden">
+        <!-- HEADER -->
+        <header id="header">
+            <div class="header-left">
+                <button id="btn-menu" class="icon-btn" aria-label="Menu">
+                    <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+                </button>
+                <h1>ECG 3D</h1>
+                <span class="badge">Dẫn Truyền</span>
+            </div>
+            <div class="header-right">
+                <button id="btn-emergency" class="emergency-btn">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    CHẾ ĐỘ TRỰC
+                </button>
+                <button id="btn-settings" class="icon-btn" aria-label="Cài đặt">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.2 4.2l2.8 2.8M17 17l2.8 2.8M1 12h4M19 12h4M4.2 19.8l2.8-2.8M17 7l2.8-2.8"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- SIDEBAR - DANH MỤC BÀI HỌC -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h2>Danh Mục Bài Học</h2>
+                <button id="btn-close-sidebar" class="icon-btn">
+                    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            
+            <nav class="lesson-nav">
+                <!-- A. RỐI LOẠN DẪN TRUYỀN NHĨ – THẤT -->
+                <div class="nav-group">
+                    <h3>A. Block Nhĩ-Thất</h3>
+                    <ul>
+                        <li>
+                            <button class="lesson-btn" data-lesson="av-block-1">
+                                <span class="lesson-icon av1"></span>
+                                <span class="lesson-info">
+                                    <strong>Block AV độ I</strong>
+                                    <small>PR > 200ms</small>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="lesson-btn" data-lesson="av-block-2a">
+                                <span class="lesson-icon av2a"></span>
+                                <span class="lesson-info">
+                                    <strong>Block AV độ II - Mobitz I</strong>
+                                    <small>Wenckebach</small>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="lesson-btn" data-lesson="av-block-2b">
+                                <span class="lesson-icon av2b"></span>
+                                <span class="lesson-info">
+                                    <strong>Block AV độ II - Mobitz II</strong>
+                                    <small>Nguy hiểm</small>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="lesson-btn" data-lesson="av-block-3">
+                                <span class="lesson-icon av3"></span>
+                                <span class="lesson-info">
+                                    <strong>Block AV độ III</strong>
+                                    <small>Hoàn toàn</small>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- B. RỐI LOẠN DẪN TRUYỀN TRONG THẤT -->
+                <div class="nav-group">
+                    <h3>B. Block Nhánh & Phân Nhánh</h3>
+                    <ul>
+                        <li>
+                            <button class="lesson-btn" data-lesson="rbbb">
+                                <span class="lesson-icon rbbb"></span>
+                                <span class="lesson-info">
+                                    <strong>Block Nhánh Phải (RBBB)</strong>
+                                    <small>rsR' ở V1</small>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="lesson-btn" data-lesson="lbbb">
+                                <span class="lesson-icon lbbb"></span>
+                                <span class="lesson-info">
+                                    <strong>Block Nhánh Trái (LBBB)</strong>
+                                    <small>QRS rộng V6</small>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="lesson-btn" data-lesson="lafb">
+                                <span class="lesson-icon lafb"></span>
+                                <span class="lesson-info">
+                                    <strong>Block Phân Nhánh Trước Trái</strong>
+                                    <small>LAFB - Trục lệch trái</small>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="lesson-btn" data-lesson="lpfb">
+                                <span class="lesson-icon lpfb"></span>
+                                <span class="lesson-info">
+                                    <strong>Block Phân Nhánh Sau Trái</strong>
+                                    <small>LPFB - Trục lệch phải</small>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- CASE LÂM SÀNG -->
+                <div class="nav-group">
+                    <h3>C. Case Lâm Sàng</h3>
+                    <ul>
+                        <li>
+                            <button class="lesson-btn case-btn" data-lesson="case-syncope">
+                                <span class="lesson-icon case"></span>
+                                <span class="lesson-info">
+                                    <strong>BN ngất, mạch chậm</strong>
+                                    <small>Tương tác</small>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT - SPLIT VIEW -->
+        <main id="main-content">
+            <!-- LEFT: TIM 3D -->
+            <section id="panel-3d" class="panel">
+                <div class="panel-header">
+                    <h2>Tim 3D - Hệ Dẫn Truyền</h2>
+                    <div class="panel-controls">
+                        <button id="btn-reset-view" class="ctrl-btn" title="Reset góc nhìn">
+                            <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                        </button>
+                        <button id="btn-toggle-labels" class="ctrl-btn active" title="Bật/tắt nhãn">
+                            <svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="heart-container">
+                    <canvas id="heart-canvas"></canvas>
+                    
+                    <!-- ĐIỀU KHIỂN HỆ DẪN TRUYỀN -->
+                    <div id="conduction-controls">
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="ctrl-sa" checked>
+                                <span class="node-indicator sa"></span>
+                                Nút xoang (SA)
+                            </label>
+                            <label>
+                                <input type="checkbox" id="ctrl-av" checked>
+                                <span class="node-indicator av"></span>
+                                Nút nhĩ thất (AV)
+                            </label>
+                            <label>
+                                <input type="checkbox" id="ctrl-his" checked>
+                                <span class="node-indicator his"></span>
+                                Bó His
+                            </label>
+                            <label>
+                                <input type="checkbox" id="ctrl-rb" checked>
+                                <span class="node-indicator rb"></span>
+                                Nhánh phải
+                            </label>
+                            <label>
+                                <input type="checkbox" id="ctrl-lb" checked>
+                                <span class="node-indicator lb"></span>
+                                Nhánh trái
+                            </label>
+                            <label>
+                                <input type="checkbox" id="ctrl-laf" checked>
+                                <span class="node-indicator laf"></span>
+                                Phân nhánh trước
+                            </label>
+                            <label>
+                                <input type="checkbox" id="ctrl-lpf" checked>
+                                <span class="node-indicator lpf"></span>
+                                Phân nhánh sau
+                            </label>
+                        </div>
+                        
+                        <div class="speed-control">
+                            <label for="conduction-speed">Tốc độ xung:</label>
+                            <input type="range" id="conduction-speed" min="0.1" max="2" step="0.1" value="1">
+                            <span id="speed-value">1x</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TRẠNG THÁI BLOCK -->
+                <div id="block-indicator" class="hidden">
+                    <div class="block-badge">
+                        <span class="block-icon">⛔</span>
+                        <span id="block-location">Vị trí block</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT: ECG 12 CHUYỂN ĐẠO -->
+            <section id="panel-ecg" class="panel">
+                <div class="panel-header">
+                    <h2>ECG 12 Chuyển Đạo</h2>
+                    <div class="panel-controls">
+                        <button id="btn-zoom-ecg" class="ctrl-btn" title="Phóng to ECG">
+                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg>
+                        </button>
+                        <button id="btn-measure" class="ctrl-btn" title="Đo khoảng cách">
+                            <svg viewBox="0 0 24 24"><path d="M2 12h20M12 2v20M2 17l5-5M2 7l5 5M22 17l-5-5M22 7l-5 5"/></svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="ecg-container">
+                    <div id="ecg-grid">
+                        <!-- 12 chuyển đạo được render bởi JS -->
+                        <div class="ecg-row">
+                            <div class="ecg-lead" data-lead="I"><canvas></canvas><span>I</span></div>
+                            <div class="ecg-lead" data-lead="aVR"><canvas></canvas><span>aVR</span></div>
+                            <div class="ecg-lead" data-lead="V1"><canvas></canvas><span>V1</span></div>
+                            <div class="ecg-lead" data-lead="V4"><canvas></canvas><span>V4</span></div>
+                        </div>
+                        <div class="ecg-row">
+                            <div class="ecg-lead" data-lead="II"><canvas></canvas><span>II</span></div>
+                            <div class="ecg-lead" data-lead="aVL"><canvas></canvas><span>aVL</span></div>
+                            <div class="ecg-lead" data-lead="V2"><canvas></canvas><span>V2</span></div>
+                            <div class="ecg-lead" data-lead="V5"><canvas></canvas><span>V5</span></div>
+                        </div>
+                        <div class="ecg-row">
+                            <div class="ecg-lead" data-lead="III"><canvas></canvas><span>III</span></div>
+                            <div class="ecg-lead" data-lead="aVF"><canvas></canvas><span>aVF</span></div>
+                            <div class="ecg-lead" data-lead="V3"><canvas></canvas><span>V3</span></div>
+                            <div class="ecg-lead" data-lead="V6"><canvas></canvas><span>V6</span></div>
+                        </div>
+                        <!-- Rhythm strip -->
+                        <div class="ecg-rhythm">
+                            <canvas id="rhythm-strip"></canvas>
+                            <span>II - Rhythm</span>
+                        </div>
+                    </div>
+                    
+                    <!-- ECG ANNOTATIONS -->
+                    <div id="ecg-annotations" class="hidden">
+                        <div class="annotation pr-interval">
+                            <span class="label">PR</span>
+                            <span class="value" id="pr-value">--</span>
+                        </div>
+                        <div class="annotation qrs-duration">
+                            <span class="label">QRS</span>
+                            <span class="value" id="qrs-value">--</span>
+                        </div>
+                        <div class="annotation axis">
+                            <span class="label">Trục</span>
+                            <span class="value" id="axis-value">--</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- BOTTOM: GIẢI THÍCH + LOA ĐỌC -->
+        <section id="explanation-panel">
+            <div class="explanation-header">
+                <div class="lesson-title">
+                    <span id="current-lesson-icon" class="lesson-icon normal"></span>
+                    <h3 id="current-lesson-title">Chọn bài học để bắt đầu</h3>
+                </div>
+                <div class="audio-controls">
+                    <button id="btn-play-audio" class="audio-btn" disabled>
+                        <svg class="icon-play" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        <svg class="icon-pause hidden" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    </button>
+                    <button id="btn-fast-mode" class="speed-btn" title="Nghe nhanh khi trực (30-45s)">
+                        ⚡ Nhanh
+                    </button>
+                    <div class="volume-control">
+                        <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                        <input type="range" id="volume" min="0" max="1" step="0.1" value="0.8">
+                    </div>
+                </div>
+            </div>
+            
+            <div id="explanation-content">
+                <div id="step-indicator">
+                    <span class="step" data-step="1">1. Bình thường</span>
+                    <span class="step" data-step="2">2. Chặn dẫn truyền</span>
+                    <span class="step" data-step="3">3. Quan sát xung điện</span>
+                    <span class="step" data-step="4">4. ECG thay đổi</span>
+                    <span class="step" data-step="5">5. Kết luận</span>
+                </div>
+                
+                <div id="explanation-text">
+                    <p id="main-explanation">
+                        Chào mừng bạn đến với <strong>ECG 3D - Rối Loạn Dẫn Truyền</strong>.<br>
+                        Chọn một bài học từ menu bên trái để bắt đầu.
+                    </p>
+                </div>
+                
+                <!-- MẸO NHỚ -->
+                <div id="mnemonic-box" class="hidden">
+                    <div class="mnemonic-header">
+                        <span class="mnemonic-icon">💡</span>
+                        <strong>MẸO NHỚ</strong>
+                    </div>
+                    <p id="mnemonic-text"></p>
+                </div>
+            </div>
+            
+            <!-- ĐIỀU KHIỂN BƯỚC HỌC -->
+            <div id="lesson-controls">
+                <button id="btn-prev-step" class="nav-btn" disabled>
+                    <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+                    Trước
+                </button>
+                <div class="step-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <button id="btn-next-step" class="nav-btn" disabled>
+                    Tiếp
+                    <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- CHẾ ĐỘ TRỰC CẤP CỨU (MODAL) -->
+        <div id="emergency-mode" class="modal hidden">
+            <div class="modal-content emergency-content">
+                <button id="btn-close-emergency" class="close-btn">
+                    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+                
+                <div class="emergency-header">
+                    <span class="emergency-icon">🚨</span>
+                    <h2>CHẾ ĐỘ TRỰC CẤP CỨU</h2>
+                </div>
+                
+                <div class="emergency-grid">
+                    <!-- Quick cards cho từng loại block -->
+                    <div class="quick-card" data-quick="av-block-3">
+                        <div class="quick-3d">
+                            <canvas class="mini-heart"></canvas>
+                        </div>
+                        <div class="quick-info">
+                            <h4>Block AV III</h4>
+                            <div class="quick-ecg">
+                                <img src="assets/ecg-samples/av3-mini.png" alt="AV Block III ECG">
+                            </div>
+                            <p class="quick-mnemonic">"P MỘT NHỊP – QRS MỘT NHỊP"</p>
+                            <div class="quick-action">
+                                <strong>⚠️ Xử trí:</strong>
+                                <span>Atropine 0.5mg IV → Pacing tạm thời</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-card" data-quick="av-block-2b">
+                        <div class="quick-3d">
+                            <canvas class="mini-heart"></canvas>
+                        </div>
+                        <div class="quick-info">
+                            <h4>Block AV II - Mobitz II</h4>
+                            <div class="quick-ecg">
+                                <img src="assets/ecg-samples/mobitz2-mini.png" alt="Mobitz II ECG">
+                            </div>
+                            <p class="quick-mnemonic">"PR KHÔNG ĐỔI → RỤNG ĐỘT NGỘT"</p>
+                            <div class="quick-action">
+                                <strong>⚠️ Xử trí:</strong>
+                                <span>Theo dõi sát → Chuẩn bị pacing</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-card" data-quick="rbbb">
+                        <div class="quick-3d">
+                            <canvas class="mini-heart"></canvas>
+                        </div>
+                        <div class="quick-info">
+                            <h4>Block Nhánh Phải</h4>
+                            <div class="quick-ecg">
+                                <img src="assets/ecg-samples/rbbb-mini.png" alt="RBBB ECG">
+                            </div>
+                            <p class="quick-mnemonic">"NHÁNH PHẢI → R' NHƯ TAI THỎ Ở V1"</p>
+                            <div class="quick-action">
+                                <strong>📋 Lưu ý:</strong>
+                                <span>Thường lành tính nếu đơn độc</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-card" data-quick="lbbb">
+                        <div class="quick-3d">
+                            <canvas class="mini-heart"></canvas>
+                        </div>
+                        <div class="quick-info">
+                            <h4>Block Nhánh Trái</h4>
+                            <div class="quick-ecg">
+                                <img src="assets/ecg-samples/lbbb-mini.png" alt="LBBB ECG">
+                            </div>
+                            <p class="quick-mnemonic">"NHÁNH TRÁI → V1 ÂM SÂU, V6 R RỘNG"</p>
+                            <div class="quick-action">
+                                <strong>⚠️ Xử trí:</strong>
+                                <span>Tìm nguyên nhân (bệnh tim thực thể?)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CASE LÂM SÀNG MODAL -->
+        <div id="case-modal" class="modal hidden">
+            <div class="modal-content case-content">
+                <button id="btn-close-case" class="close-btn">
+                    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+                
+                <div class="case-header">
+                    <span class="case-icon">🏥</span>
+                    <h2>CASE LÂM SÀNG TƯƠNG TÁC</h2>
+                </div>
+                
+                <div id="case-content">
+                    <!-- Được render bởi JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ECG ZOOM MODAL -->
+        <div id="ecg-zoom-modal" class="modal hidden">
+            <div class="modal-content ecg-zoom-content">
+                <button id="btn-close-zoom" class="close-btn">
+                    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+                <canvas id="ecg-zoom-canvas"></canvas>
+                <div id="ecg-zoom-tools">
+                    <div class="measurement-info">
+                        <span id="zoom-pr">PR: --</span>
+                        <span id="zoom-qrs">QRS: --</span>
+                        <span id="zoom-qt">QT: --</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="js/lessonData.js"></script>
+    <script src="js/heart3d.js"></script>
+    <script src="js/ecgRenderer.js"></script>
+    <script src="js/audioNarrator.js"></script>
+    <script src="js/caseSimulator.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('SW registered'))
+                .catch(err => console.log('SW registration failed:', err));
+        }
+    </script>
+</body>
+</html>
